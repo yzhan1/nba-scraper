@@ -1,3 +1,4 @@
+bs4
 altgraph==0.10.2
 appnope==0.1.0
 astroid==1.5.3
