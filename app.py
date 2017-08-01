@@ -19,11 +19,11 @@ def favicon():
 @app.route('/')
 def main():
     scraper = Scraper()
-    return render_template('main.html', news=data)
+    return render_template('main.html', news=data[:20])
 
 
 @app.route("/download")
-def getJSON():
+def get_json():
     return send_from_directory(directory='static', filename='data.json', as_attachment=True)
 
 

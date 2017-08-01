@@ -14,7 +14,7 @@
         </div>
     </nav>
 
-    <div class="jumbotron jumbotron-fluid" style="background: #c01e2f; color: white; padding: 2rem">
+    <div class="jumbotron jumbotron-fluid" style="background: #c01e2f; color: white; padding: 0.5rem">
         <div class="container">
             <h1 class="display-3">
                 <div style="display: flex; justify-content: space-between">
@@ -35,7 +35,7 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Title</th>
+                    <th>Title (newest 20)</th>
                     <th>From</th>
                 </tr>
             </thead>
@@ -48,6 +48,14 @@
             {% endfor %}
              </tbody>
         </table>
+
+        <hr style="margin-top: 25px">
+        <footer>
+            <div style="display: flex; justify-content: space-between">
+                <p>© Yaoming Zhan 2017</p>
+                <a href="https://github.com/zhanym0981/hupu-scraper" target="_blank">GitHub</a>
+            </div>
+        </footer>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
