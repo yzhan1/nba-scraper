@@ -1,12 +1,11 @@
 import os
-from flask import Flask, render_template, json, send_from_directory, request
+from flask import Flask, render_template, json, send_from_directory, request, redirect, url_for
 
 from scraper import Scraper
 
 app = Flask(__name__)
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 json_url = os.path.join(SITE_ROOT, 'static', "data.json")
-# print(json_url)
 
 
 @app.route('/favicon.ico')
@@ -19,16 +18,22 @@ def favicon():
 def main():
     if request.method == 'GET':
         json_data = open(json_url, 'r')
-        # print(json_data.read())
         data = json.load(json_data)
         return render_template('main.html', news=data[:20])
     elif request.method == 'POST':
+        render_template('scrape.html')
         scraper = Scraper()
         new_data = scraper.scrape()
-        return render_template('main.html', news=new_data[:20])
+        return redirect(url_for('.main', news=new_data[:20]))
 
 
-@app.route("/download")
+#
+# @app.route('/scraping', methods=['POST'])
+# def scrape():
+#
+
+
+@app.route('/download')
 def get_json():
     return send_from_directory(directory='static', filename='data.json', as_attachment=True)
 
