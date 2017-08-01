@@ -5,7 +5,6 @@ astroid==1.5.3
 backports.functools-lru-cache==1.4
 backports.shutil-get-terminal-size==1.0.0
 bdist-mpkg==0.5.0
-bonjour-py
 click==6.7
 configparser==3.5.0
 decorator==4.0.11
