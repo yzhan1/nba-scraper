@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 class Scraper:
     def __init__(self):
         SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-        json_url = os.path.join(SITE_ROOT, 'static', "datatest.json")
+        json_url = os.path.join(SITE_ROOT, 'static', "data.json")
         self.urls = self.get_urls()
         open(json_url, 'w').close()
         self.file = open(json_url, 'w')
