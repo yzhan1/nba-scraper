@@ -21,10 +21,9 @@ def main():
         data = json.load(json_data)
         return render_template('main.html', news=data[:20])
     elif request.method == 'POST':
-        render_template('scrape.html')
         scraper = Scraper()
         new_data = scraper.scrape()
-        return redirect(url_for('.main', news=new_data[:20]))
+        return render_template('scrape.html', news=new_data[:20])
 
 
 #
