@@ -1,29 +1,45 @@
 import os
-from flask import Flask, render_template, json, send_from_directory, request, jsonify
-
+from flask import Flask, render_template, json, send_from_directory, jsonify
+from rq import Queue
+from rq.job import Job
+from worker import conn
 from scraper import Scraper
 
 app = Flask(__name__)
+
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 json_url = os.path.join(SITE_ROOT, 'static', "data.json")
+q = Queue(connection=conn)
 
 
 @app.route('/favicon.ico')
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico',
-                               mimetype='image/vnd.microsoft.icon')
+    return send_from_directory(directory='static', filename='favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def main():
-    if request.method == 'GET':
-        json_data = open(json_url, 'r')
-        data = json.load(json_data)
-        return render_template('main.html', news=data[:20])
-    elif request.method == 'POST':
-        scraper = Scraper()
-        new_data = scraper.scrape(json_url)
-        return render_template('main.html', news=new_data[:20])
+    json_data = open(json_url, 'r')
+    data = json.load(json_data)
+    return render_template('main.html', news=data[:20])
+
+
+@app.route('/scrape', methods=['POST'])
+def scrape():
+    scraper = Scraper()
+    job = q.enqueue_call(
+        func=scraper.scrape, args=(json_url,), result_ttl=5000, timeout=10000
+    )
+    return job.get_id()
+
+
+@app.route("/results/<job_key>", methods=['GET'])
+def get_results(job_key):
+    job = Job.fetch(job_key, connection=conn)
+    if job.is_finished:
+        return jsonify(job.result)
+    else:
+        return "Scraping...", 202
 
 
 @app.route('/get-json', methods=['GET'])

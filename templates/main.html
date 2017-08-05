@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="HupuScraper">
 <head>
     <meta charset="UTF-8">
     <title>虎扑NBA新闻爬虫</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
-<body>
+<body ng-controller="ScraperController">
 
     <nav class="navbar navbar-toggleable-md navbar-inverse" style="background: #c01e2f">
         <div class="container">
@@ -20,7 +22,7 @@
                 <div style="display: flex; justify-content: space-between">
                     <img src="./../static/hupu.png" style="height: 110px;"/>
                     <div>
-                        <form role="form" method='POST' action='/'>
+                        <form role="form" ng-submit="getResults()">
                             <button type="submit" class="btn btn-secondary btn-lg" style="color: white; background: transparent">运行</button>
                             <button type="button" class="btn btn-secondary btn-lg" style="color: white; background: transparent">
                                 <a href="/download" target="_blank" style="color: white">下载json文件</a>
@@ -35,22 +37,24 @@
     </div>
 
     <div class="container">
-        <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Title (most recent 20)</th>
-                    <th>From</th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for item in news %}
-                <tr>
-                    <td><a href="{{ item.link }}" target="_blank">{{ item.text }}</a></td>
-                    <td>{{ item.from }}</td>
-                </tr>
-            {% endfor %}
-             </tbody>
-        </table>
+         <div id="results">
+             <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Title (most recent 20)</th>
+                        <th>From</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in news %}
+                    <tr>
+                        <td><a href="{{ item.link }}" target="_blank">{{ item.text }}</a></td>
+                        <td>{{ item.from }}</td>
+                    </tr>
+                {% endfor %}
+                 </tbody>
+            </table>
+         </div>
 
         <hr style="margin-top: 25px">
         <footer>
