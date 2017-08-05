@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, json, send_from_directory, request, redirect, url_for
+from flask import Flask, render_template, json, send_from_directory, request, jsonify
 
 from scraper import Scraper
 
@@ -22,18 +22,18 @@ def main():
         return render_template('main.html', news=data[:20])
     elif request.method == 'POST':
         scraper = Scraper()
-        new_data = scraper.scrape()
-        return render_template('scrape.html', news=new_data[:20])
+        new_data = scraper.scrape(json_url)
+        return render_template('main.html', news=new_data[:20])
 
 
-#
-# @app.route('/scraping', methods=['POST'])
-# def scrape():
-#
+@app.route('/get-json', methods=['GET'])
+def get_json():
+    scraper = Scraper()
+    return jsonify(scraper.return_json(json_url))
 
 
 @app.route('/download')
-def get_json():
+def download():
     return send_from_directory(directory='static', filename='data.json', as_attachment=True)
 
 

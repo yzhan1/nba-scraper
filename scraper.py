@@ -9,21 +9,22 @@ class Scraper:
         SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
         json_url = os.path.join(SITE_ROOT, 'static', "data.json")
         self.urls = self.get_urls()
-        open(json_url, 'w').close()
-        self.file = open(json_url, 'w')
+        self.data = self.load_json(json_url)
 
-    # def main():
-    #     urls = get_urls(self)
-    #     file = open("data.json", "w")
-    #     scrape(self, urls, file)
+    @staticmethod
+    def load_json(json_url):
+        file = open(json_url, 'r')
+        return json.load(file)
 
     @staticmethod
     def get_urls():
         urls = ['https://voice.hupu.com/nba/{}'.format(str(i)) for i in range(1, 100, 1)]
         return urls
 
-    def scrape(self):
+    def scrape(self, json_url):
         print('Begin scraping')
+        open(json_url, 'w').close()
+        file = open(json_url, 'w')
         res = []
         for url in self.urls:
             page = requests.get(url)
@@ -43,11 +44,18 @@ class Scraper:
                         'from': from_tag.text
                     }
                     res.append(item)
-        json.dump(res, self.file, ensure_ascii=False)
-        self.file.close()
+        json.dump(res, file, ensure_ascii=False)
+        file.close()
+        # self.data = self.load_json()
         print('Done scraping')
         return res
 
+    def return_json(self, json_url):
+        return self.load_json(json_url)
+
+
 if __name__ == '__main__':
     scraper = Scraper()
-    scraper.scrape()
+    SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
+    json_url = os.path.join(SITE_ROOT, 'static', "data.json")
+    scraper.scrape(json_url)
