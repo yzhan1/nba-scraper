@@ -17,7 +17,7 @@ def favicon():
     return send_from_directory(directory='static', filename='favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def main():
     json_data = open(json_url, 'r')
     data = json.load(json_data)

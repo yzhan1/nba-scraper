@@ -18,7 +18,7 @@ class Scraper:
 
     @staticmethod
     def get_urls():
-        urls = ['https://voice.hupu.com/nba/{}'.format(str(i)) for i in range(1, 100, 1)]
+        urls = ['https://voice.hupu.com/nba/{}'.format(str(i)) for i in range(1, 101, 1)]
         return urls
 
     def scrape(self, json_url):
@@ -27,6 +27,7 @@ class Scraper:
         file = open(json_url, 'w')
         res = []
         for url in self.urls:
+            print('scraping ' + url)
             page = requests.get(url)
             soup = BeautifulSoup(page.content, 'html.parser')
             lst = soup.select('div.news-list ul li')
@@ -46,7 +47,6 @@ class Scraper:
                     res.append(item)
         json.dump(res, file, ensure_ascii=False)
         file.close()
-        # self.data = self.load_json()
         print('Done scraping')
         return res
 
