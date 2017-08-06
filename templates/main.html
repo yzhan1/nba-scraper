@@ -5,8 +5,6 @@
     <title>虎扑NBA新闻爬虫</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </head>
 <body ng-controller="ScraperController">
 
@@ -23,22 +21,26 @@
                     <img src="./../static/hupu.png" style="height: 110px;"/>
                     <div>
                         <form role="form" ng-submit="getResults()">
-                            <button type="submit" class="btn btn-secondary btn-lg" style="color: white; background: transparent">运行</button>
-                            <button type="button" class="btn btn-secondary btn-lg" style="color: white; background: transparent">
-                                <a href="/download" target="_blank" style="color: white">下载json文件</a>
+                            {% raw %}
+                                <button type="submit" class="btn btn-secondary btn-lg"
+                                 ng-disabled="loading" style="color: white; background: transparent">{{ submitButtonText }}</button>
+                            {% endraw %}
+                            <button type="button" onclick="window.open('/download')" class="btn btn-secondary btn-lg" style="color: white; background: transparent" ng-disabled="loading">
+                                下载json文件
                             </button>
                         </form>
-
                     </div>
                 </div>
             </h1>
-
         </div>
     </div>
 
     <div class="container">
-         <div id="results">
-             <table class="table table-striped table-bordered">
+        <div class="progress" ng-show="loading" style="margin-bottom: 20px">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+        </div>
+        <div id="results">
+            <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Title (most recent 20)</th>
@@ -52,9 +54,9 @@
                         <td>{{ item.from }}</td>
                     </tr>
                 {% endfor %}
-                 </tbody>
+                </tbody>
             </table>
-         </div>
+        </div>
 
         <hr style="margin-top: 25px">
         <footer>
@@ -68,5 +70,7 @@
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js"></script>
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>
