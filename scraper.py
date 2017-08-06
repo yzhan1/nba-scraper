@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 class Scraper:
     def __init__(self):
         SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-        json_url = os.path.join(SITE_ROOT, 'static', "data.json")
+        json_url = os.path.join(SITE_ROOT, 'static', 'data.json')
         self.urls = self.get_urls()
         self.data = self.load_json(json_url)
 
@@ -57,5 +57,5 @@ class Scraper:
 if __name__ == '__main__':
     scraper = Scraper()
     SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-    json_url = os.path.join(SITE_ROOT, 'static', "data.json")
+    json_url = os.path.join(SITE_ROOT, 'static', 'data.json')
     scraper.scrape(json_url)

@@ -8,7 +8,7 @@ from scraper import Scraper
 app = Flask(__name__)
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
-json_url = os.path.join(SITE_ROOT, 'static', "data.json")
+json_url = os.path.join(SITE_ROOT, 'static', 'data.json')
 q = Queue(connection=conn)
 
 
@@ -21,7 +21,7 @@ def favicon():
 def main():
     json_data = open(json_url, 'r')
     data = json.load(json_data)
-    return render_template('main.html', news=data[:20])
+    return render_template('index.html', news=data[:20])
 
 
 @app.route('/scrape', methods=['POST'])
