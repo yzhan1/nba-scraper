@@ -37,7 +37,7 @@ def scrape():
 def get_results(job_key):
     job = Job.fetch(job_key, connection=conn)
     if job.is_finished:
-        return jsonify(job.result)
+        return "Done", 200
     else:
         return "Scraping...", 202
 
