@@ -48,7 +48,7 @@ class Scraper:
         json.dump(res, file, ensure_ascii=False)
         file.close()
         print('Done scraping')
-        return res
+        # return res
 
     def return_json(self, json_url):
         return self.load_json(json_url)

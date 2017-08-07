@@ -27,10 +27,10 @@
                         if(status === 202) {
                             $log.log(data, status);
                         } else if (status === 200){
-                            $log.log(data);
+                            // $log.log(data);
                             $scope.loading = false;
                             $scope.submitButtonText = "运行";
-                            $scope.news = data;
+                            // $scope.news = data;
                             $log.log('set news to data');
                             $timeout.cancel(timeout);
                             window.location.reload();
