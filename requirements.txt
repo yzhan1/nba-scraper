@@ -5,3 +5,4 @@ requests==2.13.0
 rq
 redis
 gunicorn
+Werkzeug
