@@ -1,4 +1,6 @@
 import os
+import sys
+import logging
 from flask import Flask, render_template, json, send_from_directory, jsonify
 from rq import Queue
 from rq.job import Job
@@ -6,6 +8,8 @@ from worker import conn
 from scraper import Scraper
 
 app = Flask(__name__)
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
 
 SITE_ROOT = os.path.realpath(os.path.dirname(__file__))
 json_url = os.path.join(SITE_ROOT, 'static', 'data.json')
