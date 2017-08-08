@@ -10,10 +10,10 @@ Utilized Redis task queue to handle the scraping
 
     +  Download the folder
     
-    +  Install packages in requirement.txt using ```pip3 install```
+    +  Install packages using ```pip3 install -r requirements.txt```
     
-    +  Run ```python3 app.py```
+    +  Run ```python3 app.py``` and visit 0.0.0.0/5000
 
-+ API route for corpus data in JSON format: ```/get-json```
++ API route for corpus data in JSON format: ```/api/get-json```
 
 + Live at: https://powerful-cove-80847.herokuapp.com/

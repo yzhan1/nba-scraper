@@ -41,12 +41,12 @@ def scrape():
 def get_results(job_key):
     job = Job.fetch(job_key, connection=conn)
     if job.is_finished:
-        return "Done", 200
+        return jsonify(job.result)
     else:
         return "Scraping...", 202
 
 
-@app.route('/get-json', methods=['GET'])
+@app.route('/api/get-json', methods=['GET'])
 def get_json():
     scraper = Scraper()
     return jsonify(scraper.return_json(json_url))
